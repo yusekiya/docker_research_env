@@ -1,4 +1,5 @@
 FROM yusekiya/research-python
+WORKDIR "/tmp"
 RUN apt-get update && apt-get install -y build-essential cmake pkg-config unzip &&\
     apt-get clean &&\
     # Install fmtlib/fmt
@@ -9,3 +10,4 @@ RUN apt-get update && apt-get install -y build-essential cmake pkg-config unzip 
     conda install -y --quiet -c conda-forge pybind11 &&\
     # Clean up
     rm -rf /tmp/*
+WORKDIR "/project"
