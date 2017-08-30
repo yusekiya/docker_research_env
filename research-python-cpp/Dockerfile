@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y build-essential cmake pkg-config unzip 
     cd /tmp/eigen3/build && cmake ../ && make install && cd /tmp &&\
     # Install pybind11
     conda install -y --quiet -c conda-forge pybind11 &&\
+    conda update -yq libgcc &&\
     # Clean up
     rm -rf /tmp/*
 WORKDIR "/project"
