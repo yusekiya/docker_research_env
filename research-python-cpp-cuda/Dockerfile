@@ -12,6 +12,7 @@ RUN apt-get update --fix-missing && apt-get install -y wget bzip2 ca-certificate
     apt-get clean
 
 # Install packages for C++ env
+## Install fmt and eigen3
 WORKDIR "/tmp"
 RUN \
     # Install fmtlib/fmt
@@ -23,6 +24,19 @@ RUN \
     mkdir -p /tmp/eigen3/build && tar xf /tmp/eigen3.tar.gz2 -C /tmp/eigen3 --strip-components 1 &&\
     cd /tmp/eigen3/build && cmake ../ && make install && cd /tmp &&\
     # Clean up
+    rm -rf /tmp/*
+
+## Install firearray
+RUN apt-get update --fix-missing && \
+    apt-get install -y libfreeimage-dev libopenblas-dev libfftw3-dev liblapacke-dev \
+    libglfw3 libglfw3-dev libfontconfig1-dev \
+    libboost-all-dev opencl-headers && \
+    ln -s /usr/local/cuda/lib64/stubs/libcuda.so /usr/lib/libcuda.so.1 && \
+    ln -s /usr/lib/libcuda.so.1 /usr/lib/libcuda.so && \
+    git clone https://github.com/arrayfire/arrayfire.git && cd arrayfire && \
+    git submodule init && git submodule update && \
+    mkdir build && cd build && \
+    cmake .. -DCMAKE_BUILD_TYPE=Release && make -j8 && make install && cd /tmp && \
     rm -rf /tmp/*
 
 # Install anaconda3
