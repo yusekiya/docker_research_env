@@ -12,31 +12,51 @@ RUN apt-get update --fix-missing && apt-get install -y wget bzip2 ca-certificate
     apt-get clean
 
 # Install packages for C++ env
-## Install fmt and eigen3
 WORKDIR "/tmp"
-RUN \
-    # Install fmtlib/fmt
-    /usr/bin/curl -fsSL -o /tmp/fmt-4.0.0.zip https://github.com/fmtlib/fmt/releases/download/4.0.0/fmt-4.0.0.zip &&\
-    cd /tmp && /usr/bin/unzip -qq fmt-4.0.0.zip && cd fmt-4.0.0 &&\
-    mkdir build && cd build && cmake ../ && make install && cd /tmp &&\
-    # Install Eigen3
-    /usr/bin/curl -fsSL -o /tmp/eigen3.tar.gz2 http://bitbucket.org/eigen/eigen/get/3.3.4.tar.bz2 &&\
-    mkdir -p /tmp/eigen3/build && tar xf /tmp/eigen3.tar.gz2 -C /tmp/eigen3 --strip-components 1 &&\
-    cd /tmp/eigen3/build && cmake ../ && make install && cd /tmp &&\
-    # Clean up
-    rm -rf /tmp/*
-
 ## Install firearray
 RUN apt-get update --fix-missing && \
-    apt-get install -y libfreeimage-dev libopenblas-dev libfftw3-dev liblapacke-dev \
+    apt-get install -y libfreeimage-dev libopenblas-dev libfftw3-dev liblapack-dev liblapacke-dev \
     libglfw3 libglfw3-dev libfontconfig1-dev \
-    libboost-all-dev opencl-headers && \
-    ln -s /usr/local/cuda/lib64/stubs/libcuda.so /usr/lib/libcuda.so.1 && \
+    libboost-all-dev opencl-headers ocl-icd-opencl-dev clinfo  && \
+    apt-get clean
+RUN ln -s /usr/local/cuda/lib64/stubs/libcuda.so /usr/lib/libcuda.so.1 && \
     ln -s /usr/lib/libcuda.so.1 /usr/lib/libcuda.so && \
-    git clone https://github.com/arrayfire/arrayfire.git && cd arrayfire && \
-    git submodule init && git submodule update && \
-    mkdir build && cd build && \
-    cmake .. -DCMAKE_BUILD_TYPE=Release && make -j8 && make install && cd /tmp && \
+    mkdir -p /etc/OpenCL/vendors && \
+    echo "libnvidia-opencl.so.1" > /etc/OpenCL/vendors/nvidia.icd && \
+    echo "/usr/local/nvidia/lib" >> /etc/ld.so.conf.d/nvidia.conf && \
+    echo "/usr/local/nvidia/lib64" >> /etc/ld.so.conf.d/nvidia.conf
+ENV PATH=/usr/local/nvidia/bin:/usr/local/cuda/bin:${PATH}
+ARG COMPILE_GRAPHICS=OFF
+RUN git clone --recursive https://github.com/arrayfire/arrayfire.git -b master && \
+    cd arrayfire && mkdir build && cd build && \
+    cmake .. -DCMAKE_BUILD_TYPE=Release \
+             -DBUILD_CPU=ON \
+             -DBUILD_CUDA=ON \
+             -DBUILD_OPENCL=ON \
+             -DBUILD_UNIFIED=ON \
+             -DBUILD_GRAPHICS=${COMPILE_GRAPHICS} \
+             -DBUILD_NONFREE=OFF \
+             -DBUILD_EXAMPLES=ON \
+             -DBUILD_TEST=ON \
+             -DBUILD_DOCS=OFF \
+             -DINSTALL_FORGE_DEV=ON \
+             -DUSE_FREEIMAGE_STATIC=OFF && \
+    make -j8 && make install && \
+    echo "/usr/local/cuda/nvvm/lib64" >> /etc/ld.so.conf.d/arrayfire.conf && \
+    ldconfig && \
+    cd /tmp && rm -rf /tmp/*
+
+## Install fmt and eigen3
+RUN \
+    # Install fmtlib/fmt
+    /usr/bin/curl -fsSL -o /tmp/fmt-4.0.0.zip https://github.com/fmtlib/fmt/releases/download/4.0.0/fmt-4.0.0.zip && \
+    cd /tmp && /usr/bin/unzip -qq fmt-4.0.0.zip && cd fmt-4.0.0 && \
+    mkdir build && cd build && cmake ../ && make install && cd /tmp && \
+    # Install Eigen3
+    /usr/bin/curl -fsSL -o /tmp/eigen3.tar.gz2 http://bitbucket.org/eigen/eigen/get/3.3.4.tar.bz2 && \
+    mkdir -p /tmp/eigen3/build && tar xf /tmp/eigen3.tar.gz2 -C /tmp/eigen3 --strip-components 1 && \
+    cd /tmp/eigen3/build && cmake ../ && make install && cd /tmp &&\
+    # Clean up
     rm -rf /tmp/*
 
 # Install anaconda3
@@ -54,14 +74,18 @@ COPY jupyter_notebook_config.py /opt/conda/etc/jupyter/
 
 # Install packages to improve jupyter notebook
 RUN add-apt-repository -y ppa:jonathonf/ffmpeg-3 && \
-    apt-get update --fix-missing && apt-get install -y fonts-freefont-ttf ffmpeg &&\
+    apt-get update --fix-missing && apt-get install -y fonts-freefont-ttf ffmpeg && \
     apt-get clean
 
 # Install conda packages
-RUN conda install -yq jupyter psycopg2 &&\
+RUN conda install -yq jupyter psycopg2 && \
+    pip install -q arrayfire && \
     # Install pybind11
-    conda install -yq -c conda-forge pybind11 &&\
+    conda install -yq -c conda-forge pybind11 && \
     conda install -yq libgcc=5.2.0
+
+ENV LD_LIBRARY_PATH /usr/local/lib:$LD_LIBRARY_PATH
+ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda-8.0/nvvm/lib64
 
 WORKDIR "/project"
 CMD ["/opt/conda/bin/jupyter", "notebook", "--allow-root"]
