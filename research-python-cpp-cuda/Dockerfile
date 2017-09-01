@@ -85,7 +85,7 @@ RUN conda install -yq jupyter psycopg2 && \
     conda install -yq libgcc=5.2.0
 
 ENV LD_LIBRARY_PATH /usr/local/lib:$LD_LIBRARY_PATH
-ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda-8.0/nvvm/lib64
+ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/nvvm/lib64
 
 WORKDIR "/project"
 CMD ["/opt/conda/bin/jupyter", "notebook", "--allow-root"]
