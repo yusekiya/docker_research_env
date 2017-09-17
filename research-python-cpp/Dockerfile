@@ -17,7 +17,8 @@ RUN \
     # Clean up
     rm -rf /tmp/*
 
-RUN conda install -y --quiet -c conda-forge pybind11=2.2.0 &&\
+RUN conda install -yq -c conda-forge pybind11=2.2.0 &&\
+    conda install -yq -c intel mkl-include &&\
     conda install -yq libgcc=5.2.0
 
 WORKDIR "/project"
