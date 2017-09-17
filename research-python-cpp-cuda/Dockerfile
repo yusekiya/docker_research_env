@@ -82,7 +82,7 @@ RUN conda install -yq jupyter psycopg2 && \
     pip install -q arrayfire && \
     # Install pybind11
     conda install -yq -c conda-forge pybind11=2.2.0 && \
-    conda install -yq -c intel mkl-include &&\
+    conda install -yq -c intel mkl-include mkl-static &&\
     conda install -yq libgcc=5.2.0
 
 ENV LD_LIBRARY_PATH /usr/local/lib:$LD_LIBRARY_PATH
