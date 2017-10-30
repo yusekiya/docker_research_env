@@ -60,7 +60,7 @@ RUN \
     rm -rf /tmp/*
 
 # Install anaconda3
-ENV LANG=C.UTF-8 LC_ALL=C.UTF-8 CONDAVERSION=4.4.0
+ENV LANG=C.UTF-8 LC_ALL=C.UTF-8 CONDAVERSION=5.0.0
 RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
     wget --quiet https://repo.continuum.io/archive/Anaconda3-${CONDAVERSION}-Linux-x86_64.sh -O ~/anaconda.sh && \
     /bin/bash ~/anaconda.sh -b -p /opt/conda && \
@@ -81,9 +81,8 @@ RUN add-apt-repository -y ppa:jonathonf/ffmpeg-3 && \
 RUN conda install -yq jupyter psycopg2 && \
     pip install -q arrayfire && \
     # Install pybind11
-    conda install -yq -c conda-forge pybind11=2.2.0 && \
+    conda install -yq -c conda-forge pybind11=2.2.1 && \
     conda install -yq -c intel mkl-include mkl-static &&\
-    conda install -yq libgcc=5.2.0
 
 ENV LD_LIBRARY_PATH /usr/local/lib:$LD_LIBRARY_PATH
 ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/nvvm/lib64
