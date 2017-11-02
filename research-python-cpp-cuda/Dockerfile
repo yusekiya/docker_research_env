@@ -60,7 +60,7 @@ RUN \
     rm -rf /tmp/*
 
 # Install anaconda3
-ENV LANG=C.UTF-8 LC_ALL=C.UTF-8 CONDAVERSION=5.0.0
+ENV LANG=C.UTF-8 LC_ALL=C.UTF-8 CONDAVERSION=5.0.1
 RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
     wget --quiet https://repo.continuum.io/archive/Anaconda3-${CONDAVERSION}-Linux-x86_64.sh -O ~/anaconda.sh && \
     /bin/bash ~/anaconda.sh -b -p /opt/conda && \
