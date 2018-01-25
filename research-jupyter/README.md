@@ -10,7 +10,7 @@ This image includes
 If you want to build image locally, issue the following command
 
 ``` bash
-$ docker build -t "yusekiya/research-python:<tag>" .
+$ docker build -t "yusekiya/research-jupyter:<tag>" .
 ```
 
 
