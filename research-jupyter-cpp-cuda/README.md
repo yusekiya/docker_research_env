@@ -30,6 +30,8 @@ NOTEBOOK_PASSWORD=<your_notebook_password>
 
 ### Example of `docker-compose.yml`
 
+#### docker-compose version < 1.19
+
 Create volume for nvidia driver first.
 
 ``` shell
@@ -65,3 +67,26 @@ services:
 
 Make sure to append `<tag>` to the image in order to improve
 the reproducibility of research.
+
+#### docker-compose version >=1.19
+
+Use `nvidia-docker 2`.
+
+``` yaml
+version: '3'
+services:
+  jupyter:
+    image: yusekiya/research-python-cpp-cuda:<tag>:
+    runtime: nvidia
+    volumes:
+      - './src:/project/src'
+      - './src/lib:/project/notebook/lib'
+      - './img:/project/img'
+      - './notebook:/project/notebook'
+      - './data:/project/data'
+    ports:
+      - '8888'
+    env_file:
+      - './jupyter.env'
+```
+
