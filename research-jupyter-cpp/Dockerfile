@@ -1,4 +1,4 @@
-FROM yusekiya/research-python
+FROM yusekiya/research-jupyter
 
 WORKDIR "/tmp"
 
