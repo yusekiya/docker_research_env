@@ -1,8 +1,34 @@
-FROM continuumio/anaconda3:5.0.1
+FROM continuumio/miniconda3:4.3.27p0
 RUN echo deb http://ftp.uk.debian.org/debian jessie-backports main >> /etc/apt/sources.list &&\
     apt-get update && apt-get install -y fonts-freefont-ttf ffmpeg &&\
     apt-get clean
-RUN conda install -yq jupyter psycopg2
+RUN conda update -yq conda && \
+    conda install -yq \
+    python=3.6.4 \
+    blaze=0.11.* \
+    bokeh=0.12.* \
+    bottleneck=1.2.* \
+    cython=0.27.* \
+    dask=0.16.* \
+    dill=0.2.7.* \
+    numpy=1.14.* \
+    numpydoc=0.7.* \
+    numexpr=2.6.* \
+    scipy=1.0.0 \
+    pandas=0.22.* \
+    matplotlib=2.1.* \
+    numba=0.36.* \
+    jupyter=1.0.* \
+    notebook=5.4.* \
+    pathlib2=2.3.* \
+    pytest=3.3.* \
+    python-dateutil \
+    pytz \
+    pyyaml \
+    sqlalchemy=1.2.* \
+    psycopg2=2.7.3.* \
+    sqlite=3.22.* && \
+    conda clean -tipsy
 RUN mkdir -p /project/notebook
 COPY jupyter_notebook_config.py /opt/conda/etc/jupyter/
 WORKDIR "/project"
