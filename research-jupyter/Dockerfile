@@ -2,7 +2,9 @@ FROM continuumio/miniconda3:4.3.27p0
 RUN echo deb http://ftp.uk.debian.org/debian jessie-backports main >> /etc/apt/sources.list &&\
     apt-get update && apt-get install -y fonts-freefont-ttf ffmpeg &&\
     apt-get clean
-RUN conda update -yq conda && \
+RUN conda config --add channels conda-canary && \
+    conda update -yq conda && \
+    conda config --system --add pinned_packages conda-canary::conda && \
     conda install -yq \
     python=3.6.4 \
     blaze=0.11.* \
