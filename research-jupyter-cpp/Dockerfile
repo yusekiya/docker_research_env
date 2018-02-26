@@ -17,8 +17,8 @@ RUN \
     # Clean up
     rm -rf /tmp/*
 
-RUN conda install -yq -c conda-forge pybind11=2.2.1 &&\
     conda install -yq -c intel mkl-devel mkl-include mkl-static &&\
+RUN conda install -yq -c conda-forge pybind11=2.2.2 &&\
     conda clean -tipsy
 
 WORKDIR "/project"
