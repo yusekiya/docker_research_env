@@ -29,8 +29,15 @@ RUN conda config --add channels conda-canary && \
     pyyaml \
     sqlalchemy=1.2.* \
     psycopg2=2.7.3.* \
-    sqlite=3.22.* && \
+    sqlite=3.22.* \
+# Install jupyterlab
+    conda-forge::nodejs \
+    conda-forge::ipywidgets \
+    conda-forge::jupyterlab && \
+# Cleanup
     conda clean -tipsy
+# Install jupyterlab extentions
+RUN jupyter labextension install -y --clean @jupyter-widgets/jupyterlab-manager
 RUN mkdir -p /project/notebook
 COPY jupyter_notebook_config.py /opt/conda/etc/jupyter/
 WORKDIR "/project"
