@@ -1,4 +1,4 @@
-FROM continuumio/miniconda3:4.3.27p0
+FROM continuumio/miniconda3:4.4.10
 RUN echo deb http://ftp.uk.debian.org/debian jessie-backports main >> /etc/apt/sources.list &&\
     apt-get update && apt-get install -y fonts-freefont-ttf ffmpeg &&\
     apt-get clean
@@ -29,8 +29,15 @@ RUN conda config --add channels conda-canary && \
     pyyaml \
     sqlalchemy=1.2.* \
     psycopg2=2.7.3.* \
-    sqlite=3.22.* && \
+    sqlite=3.22.* \
+# Install jupyterlab
+    conda-forge::nodejs \
+    conda-forge::ipywidgets \
+    conda-forge::jupyterlab && \
+# Cleanup
     conda clean -tipsy
+# Install jupyterlab extentions
+RUN jupyter labextension install -y --clean @jupyter-widgets/jupyterlab-manager
 RUN mkdir -p /project/notebook
 COPY jupyter_notebook_config.py /opt/conda/etc/jupyter/
 WORKDIR "/project"
