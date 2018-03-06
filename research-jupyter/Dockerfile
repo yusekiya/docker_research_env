@@ -30,6 +30,7 @@ RUN conda config --add channels conda-canary && \
     sqlalchemy=1.2.* \
     psycopg2=2.7.3.* \
     sqlite=3.22.* \
+    scikit-learn=0.19.* \
 # Install jupyterlab
     conda-forge::nodejs \
     conda-forge::ipywidgets \
