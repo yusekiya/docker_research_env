@@ -12,9 +12,9 @@ c.NotebookApp.open_browser = False
 c.MultiKernelManager.default_kernel_name = 'python3'
 
 # sets a password if PASSWORD is set in the environment
-if 'NOTEBOOK_PASSWORD' in os.environ:
-  c.NotebookApp.password = passwd(os.environ['NOTEBOOK_PASSWORD'])
-  del os.environ['NOTEBOOK_PASSWORD']
+if 'JUPYTER_PASSWORD' in os.environ:
+  c.NotebookApp.password = passwd(os.environ['JUPYTER_PASSWORD'])
+  del os.environ['JUPYTER_PASSWORD']
 
 # Generate a self-signed certificate
 if 'GEN_CERT' in os.environ:

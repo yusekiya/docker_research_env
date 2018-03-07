@@ -21,10 +21,10 @@ $ docker build -t "yusekiya/research-jupyter-cpp:<tag>" .
 Create a file `jupyter.env` in the top directory of the project,
 and define your password to login to notebook server in the file.
 Each line of the env file is expected to be in `VAR=VAL` format.
-Necessary variable in the env file is `NOTEBOOK_PASSWORD`.
+Necessary variable in the env file is `JUPYTER_PASSWORD`.
 
 ``` ini
-NOTEBOOK_PASSWORD=<your_notebook_password>
+JUPYTER_PASSWORD=<your_notebook_password>
 ```
 
 ### Example of `docker-compose.yml`
