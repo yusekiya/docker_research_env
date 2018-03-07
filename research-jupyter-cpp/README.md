@@ -2,7 +2,7 @@
 
 This image includes
 
-- python (jupyter notebook, Anaconda packages, psycopg2)
+- python (jupyter, miniconda, psycopg2)
 - c/c++ environment (gcc/g++, cmake, pybind11)
 
 ## Build image
