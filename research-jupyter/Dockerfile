@@ -42,5 +42,5 @@ RUN jupyter labextension install -y --clean @jupyter-widgets/jupyterlab-manager 
 RUN mkdir -p /project/notebook
 COPY jupyter_notebook_config.py /opt/conda/etc/jupyter/
 WORKDIR "/project"
-CMD ["/opt/conda/bin/jupyter", "notebook", "--allow-root"]
+CMD ["/opt/conda/bin/jupyter", "lab", "--allow-root"]
 EXPOSE 8888
