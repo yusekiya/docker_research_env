@@ -24,17 +24,17 @@ RUN conda config --add channels conda-canary && \
     notebook=5.4.* \
     pathlib2=2.3.* \
     pytest=3.3.* \
-    python-dateutil \
-    pytz \
-    pyyaml \
+    python-dateutil=2.7.* \
+    pytz=2018.3 \
+    pyyaml=3.12 \
     sqlalchemy=1.2.* \
     psycopg2=2.7.3.* \
     sqlite=3.22.* \
     scikit-learn=0.19.* \
 # Install jupyterlab
-    conda-forge::nodejs \
-    conda-forge::ipywidgets \
-    conda-forge::jupyterlab && \
+    conda-forge::nodejs=9.9.* \
+    conda-forge::ipywidgets=7.2.* \
+    conda-forge::jupyterlab=0.32 && \
 # Cleanup
     conda clean -tipsy
 # Install jupyterlab extentions
