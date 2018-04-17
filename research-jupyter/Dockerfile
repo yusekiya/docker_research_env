@@ -18,7 +18,7 @@ RUN conda config --add channels conda-canary && \
     numexpr=2.6.* \
     scipy=1.0.0 \
     pandas=0.22.* \
-    matplotlib=2.1.* \
+    matplotlib=2.2.* \
     numba=0.36.* \
     jupyter=1.0.* \
     notebook=5.4.* \
