@@ -34,11 +34,11 @@ RUN conda config --add channels conda-canary && \
 # Install jupyterlab
     conda-forge::nodejs=9.9.* \
     conda-forge::ipywidgets=7.2.* \
-    conda-forge::jupyterlab=0.32 && \
+    conda-forge::jupyterlab=0.32.* && \
 # Cleanup
     conda clean -tipsy
 # Install jupyterlab extentions
-RUN jupyter labextension install -y --clean @jupyter-widgets/jupyterlab-manager jupyterlab_bokeh
+RUN jupyter labextension install -y --clean @jupyter-widgets/jupyterlab-manager jupyterlab_bokeh@0.5
 RUN mkdir -p /project/notebook
 COPY jupyter_notebook_config.py /opt/conda/etc/jupyter/
 WORKDIR "/project"
