@@ -6,24 +6,25 @@ RUN conda config --add channels conda-canary && \
     conda update -yq conda && \
     conda config --system --add pinned_packages conda-canary::conda && \
     conda install -yq \
-    python=3.6.4 \
+    python=3.6.* \
     blaze=0.11.* \
-    bokeh=0.12.* \
+    bokeh=0.13.* \
     bottleneck=1.2.* \
-    cython=0.27.* \
-    dask=0.16.* \
+    cython=0.28.* \
+    dask=0.18.* \
     dill=0.2.7.* \
+    pyviz::holoviews=1.10.* \
     numpy=1.14.* \
-    numpydoc=0.7.* \
+    numpydoc=0.8.* \
     numexpr=2.6.* \
-    scipy=1.0.0 \
-    pandas=0.22.* \
+    scipy=1.1.0 \
+    pandas=0.23.* \
     matplotlib=2.2.* \
-    numba=0.36.* \
+    numba=0.39.* \
     jupyter=1.0.* \
     notebook=5.4.* \
     pathlib2=2.3.* \
-    pytest=3.3.* \
+    pytest=3.6.* \
     python-dateutil=2.7.* \
     pytz=2018.3 \
     pyyaml=3.12 \
@@ -38,7 +39,7 @@ RUN conda config --add channels conda-canary && \
 # Cleanup
     conda clean -tipsy
 # Install jupyterlab extentions
-RUN jupyter labextension install -y --clean @jupyter-widgets/jupyterlab-manager jupyterlab_bokeh@0.5
+RUN jupyter labextension install -y --clean @jupyter-widgets/jupyterlab-manager jupyterlab_bokeh@0.5 @pyviz/jupyterlab_holoviews
 RUN mkdir -p /project/notebook
 COPY jupyter_notebook_config.py /opt/conda/etc/jupyter/
 WORKDIR "/project"
