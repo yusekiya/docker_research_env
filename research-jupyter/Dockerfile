@@ -6,7 +6,7 @@ RUN conda config --add channels conda-canary && \
     conda update -yq conda && \
     conda config --system --add pinned_packages conda-canary::conda && \
     conda install -yq \
-    python=3.6.4 \
+    python=3.6.* \
     blaze=0.11.* \
     bokeh=0.13.* \
     bottleneck=1.2.* \
