@@ -13,6 +13,7 @@ RUN conda config --add channels conda-canary && \
     cython=0.28.* \
     dask=0.18.* \
     dill=0.2.7.* \
+    pyviz::holoviews=1.10.* \
     numpy=1.14.* \
     numpydoc=0.8.* \
     numexpr=2.6.* \
@@ -38,7 +39,7 @@ RUN conda config --add channels conda-canary && \
 # Cleanup
     conda clean -tipsy
 # Install jupyterlab extentions
-RUN jupyter labextension install -y --clean @jupyter-widgets/jupyterlab-manager jupyterlab_bokeh@0.5
+RUN jupyter labextension install -y --clean @jupyter-widgets/jupyterlab-manager jupyterlab_bokeh@0.5 @pyviz/jupyterlab_holoviews
 RUN mkdir -p /project/notebook
 COPY jupyter_notebook_config.py /opt/conda/etc/jupyter/
 WORKDIR "/project"
