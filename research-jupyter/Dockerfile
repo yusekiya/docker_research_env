@@ -25,6 +25,7 @@ RUN conda config --add channels conda-canary && \
     notebook=5.4.* \
     pathlib2=2.3.* \
     pytest=3.6.* \
+    pytest-mock=1.10.* \
     python-dateutil=2.7.* \
     pytz=2018.3 \
     pyyaml=3.12 \
