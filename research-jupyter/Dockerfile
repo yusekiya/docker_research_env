@@ -43,6 +43,7 @@ RUN conda config --add channels conda-canary && \
 RUN jupyter labextension install -y --clean @jupyter-widgets/jupyterlab-manager jupyterlab_bokeh@0.6 @pyviz/jupyterlab_pyviz
 RUN mkdir -p /project/notebook
 COPY jupyter_notebook_config.py /opt/conda/etc/jupyter/
+COPY user-settings /root/.jupyter/lab/user-settings/
 WORKDIR "/project"
 CMD ["/opt/conda/bin/jupyter", "lab", "--allow-root"]
 EXPOSE 8888
