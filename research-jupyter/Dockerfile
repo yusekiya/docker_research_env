@@ -1,6 +1,6 @@
 FROM continuumio/miniconda3:4.4.10
-RUN echo deb http://ftp.uk.debian.org/debian jessie-backports main >> /etc/apt/sources.list &&\
-    apt-get update && apt-get install -y fonts-freefont-ttf ffmpeg &&\
+RUN echo deb http://deb.debian.org/debian stretch contrib non-free >> /etc/apt/sources.list &&\
+    apt-get update && apt-get install -y fonts-freefont-ttf fonts-firacode ffmpeg &&\
     apt-get clean
 RUN conda config --add channels conda-canary && \
     conda update -yq conda && \
