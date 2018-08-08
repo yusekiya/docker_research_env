@@ -40,7 +40,7 @@ RUN conda config --add channels conda-canary && \
 # Cleanup
     conda clean -tipsy
 # Install jupyterlab extentions
-RUN jupyter labextension install -y --clean @jupyter-widgets/jupyterlab-manager jupyterlab_bokeh@0.6 @pyviz/jupyterlab_holoviews
+RUN jupyter labextension install -y --clean @jupyter-widgets/jupyterlab-manager jupyterlab_bokeh@0.6 @pyviz/jupyterlab_pyviz
 RUN mkdir -p /project/notebook
 COPY jupyter_notebook_config.py /opt/conda/etc/jupyter/
 WORKDIR "/project"
