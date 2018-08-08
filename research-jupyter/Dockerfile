@@ -41,6 +41,18 @@ RUN conda config --add channels conda-canary && \
     conda clean -tipsy
 # Install jupyterlab extentions
 RUN jupyter labextension install -y --clean @jupyter-widgets/jupyterlab-manager jupyterlab_bokeh@0.6 @pyviz/jupyterlab_pyviz
+# Install julia
+ENV JULIA_PATH /opt/julia
+ENV PATH $JULIA_PATH/bin:$PATH
+RUN curl -fL -o julia.tar.gz https://julialang-s3.julialang.org/bin/linux/x64/0.7/julia-0.7.0-linux-x86_64.tar.gz && \
+    mkdir "$JULIA_PATH" && \
+    tar -xzf julia.tar.gz -C "$JULIA_PATH" --strip-components 1 && \
+    rm julia.tar.gz
+RUN julia -e 'using Pkg' && \
+    # julia -e 'Pkg.update()' && \
+    julia -e 'Pkg.add("IJulia")' && \
+    julia -e 'using IJulia'
+# Configure jupyter
 RUN mkdir -p /project/notebook
 COPY jupyter_notebook_config.py /opt/conda/etc/jupyter/
 COPY user-settings /root/.jupyter/lab/user-settings/
