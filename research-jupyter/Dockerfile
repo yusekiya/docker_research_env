@@ -44,14 +44,11 @@ RUN jupyter labextension install -y --clean @jupyter-widgets/jupyterlab-manager 
 # Install julia
 ENV JULIA_PATH /opt/julia
 ENV PATH $JULIA_PATH/bin:$PATH
-RUN curl -fL -o julia.tar.gz https://julialang-s3.julialang.org/bin/linux/x64/0.7/julia-0.7.0-linux-x86_64.tar.gz && \
+RUN curl -fL -o julia.tar.gz https://julialang-s3.julialang.org/bin/linux/x64/1.0/julia-1.0.0-linux-x86_64.tar.gz && \
     mkdir "$JULIA_PATH" && \
     tar -xzf julia.tar.gz -C "$JULIA_PATH" --strip-components 1 && \
     rm julia.tar.gz
-RUN julia -e 'using Pkg' && \
-    # julia -e 'Pkg.update()' && \
-    julia -e 'Pkg.add("IJulia")' && \
-    julia -e 'using IJulia'
+#RUN julia -e 'using Pkg; Pkg.add("IJulia"); using IJulia'
 # Configure jupyter
 RUN mkdir -p /project/notebook
 COPY jupyter_notebook_config.py /opt/conda/etc/jupyter/
