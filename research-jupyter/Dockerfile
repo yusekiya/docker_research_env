@@ -48,7 +48,8 @@ RUN curl -fL -o julia.tar.gz https://julialang-s3.julialang.org/bin/linux/x64/1.
     mkdir "$JULIA_PATH" && \
     tar -xzf julia.tar.gz -C "$JULIA_PATH" --strip-components 1 && \
     rm julia.tar.gz
-#RUN julia -e 'using Pkg; Pkg.add("IJulia"); using IJulia'
+RUN julia -e 'using Pkg; Pkg.add("IJulia"); Pkg.add("PyCall"); using IJulia' && \
+    pip install julia 
 # Configure jupyter
 RUN mkdir -p /project/notebook
 COPY jupyter_notebook_config.py /opt/conda/etc/jupyter/
