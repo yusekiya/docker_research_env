@@ -37,11 +37,11 @@ RUN conda config --add channels conda-canary && \
 # Install jupyterlab
     conda-forge::nodejs=9.9.* \
     conda-forge::ipywidgets=7.2.* \
-    conda-forge::jupyterlab=0.33.* && \
+    conda-forge::jupyterlab=0.34.* && \
 # Cleanup
     conda clean -tipsy
 # Install jupyterlab extentions
-RUN jupyter labextension install -y --clean @jupyter-widgets/jupyterlab-manager jupyterlab_bokeh@0.6 @pyviz/jupyterlab_pyviz
+RUN jupyter labextension install -y --clean @jupyter-widgets/jupyterlab-manager@0.37 jupyterlab_bokeh@0.6 @pyviz/jupyterlab_pyviz
 # Install julia
 ENV JULIA_PATH /opt/julia
 ENV PATH $JULIA_PATH/bin:$PATH
