@@ -7,7 +7,7 @@ import stat
 
 c.NotebookApp.ip = '*'
 c.NotebookApp.port = int(os.getenv('PORT', 8888))
-c.NotebookApp.notebook_dir = '/project/notebook'
+c.NotebookApp.notebook_dir = '/project'
 c.NotebookApp.open_browser = False
 c.MultiKernelManager.default_kernel_name = 'python3'
 

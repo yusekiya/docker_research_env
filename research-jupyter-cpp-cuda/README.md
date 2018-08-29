@@ -2,7 +2,7 @@
 
 This image includes
 
-- python (jupyter notebook, Anaconda packages, psycopg2)
+- python (jupyter notebook, Anaconda packages, packages for scientific research)
 - c/c++ environment (gcc/g++, cmake, pybind11)
 - CUDA
 

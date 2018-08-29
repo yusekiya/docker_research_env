@@ -2,7 +2,7 @@
 
 This image includes
 
-- python (jupyter, miniconda, psycopg2)
+- python (jupyter, miniconda, packages for scientific research)
 - c/c++ environment (gcc/g++, cmake, pybind11)
 
 ## Build image
