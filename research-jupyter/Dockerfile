@@ -6,7 +6,7 @@ RUN conda config --add channels conda-canary && \
     conda update -yq conda && \
     conda config --system --add pinned_packages conda-canary::conda && \
     conda install -yq \
-    python=3.6.* \
+    python=3.7.* \
     blaze=0.11.* \
     bokeh=0.13.* \
     bottleneck=1.2.* \
@@ -15,12 +15,12 @@ RUN conda config --add channels conda-canary && \
     dill=0.2.7.* \
     joblib=0.12.* \
     pyviz::holoviews=1.10.* \
-    numpy=1.14.* \
+    numpy=1.15.* \
     numpydoc=0.8.* \
     numexpr=2.6.* \
     scipy=1.1.0 \
     pandas=0.23.* \
-    matplotlib=2.2.* \
+    matplotlib=3.0.* \
     mkl-service=1.1.* \
     numba=0.39.* \
     jupyter=1.0.* \
@@ -33,11 +33,11 @@ RUN conda config --add channels conda-canary && \
     pyyaml=3.12 \
     sqlalchemy=1.2.* \
     psycopg2=2.7.3.* \
-    sqlite=3.22.* \
+    sqlite=3.24.* \
     scikit-learn=0.19.* \
 # Install jupyterlab
     conda-forge::nodejs=9.9.* \
-    conda-forge::ipywidgets=7.2.* \
+    conda-forge::ipywidgets=7.4.* \
     conda-forge::jupyterlab=0.34.* && \
 # Cleanup
     conda clean -tipsy
