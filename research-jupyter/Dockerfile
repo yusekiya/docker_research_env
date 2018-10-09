@@ -1,4 +1,4 @@
-FROM continuumio/miniconda3:4.4.10
+FROM continuumio/miniconda3:4.5.11
 RUN echo deb http://deb.debian.org/debian stretch contrib non-free >> /etc/apt/sources.list &&\
     apt-get update && apt-get install -y fonts-freefont-ttf fonts-firacode ffmpeg &&\
     apt-get clean
@@ -12,7 +12,7 @@ RUN conda config --add channels conda-canary && \
     bottleneck=1.2.* \
     cython=0.28.* \
     dask=0.18.* \
-    dill=0.2.7.* \
+    dill=0.2.8.* \
     joblib=0.12.* \
     pyviz::holoviews=1.10.* \
     numpy=1.15.* \
@@ -24,7 +24,7 @@ RUN conda config --add channels conda-canary && \
     mkl-service=1.1.* \
     numba=0.39.* \
     jupyter=1.0.* \
-    notebook=5.4.* \
+    notebook=5.7.* \
     pathlib2=2.3.* \
     pytest=3.6.* \
     pytest-mock=1.10.* \
@@ -32,17 +32,17 @@ RUN conda config --add channels conda-canary && \
     pytz=2018.3 \
     pyyaml=3.12 \
     sqlalchemy=1.2.* \
-    psycopg2=2.7.3.* \
+    psycopg2=2.7.* \
     sqlite=3.24.* \
     scikit-learn=0.19.* \
 # Install jupyterlab
     conda-forge::nodejs=9.9.* \
     conda-forge::ipywidgets=7.4.* \
-    conda-forge::jupyterlab=0.34.* && \
+    conda-forge::jupyterlab=0.35.* && \
 # Cleanup
     conda clean -tipsy
 # Install jupyterlab extentions
-RUN jupyter labextension install -y --clean @jupyter-widgets/jupyterlab-manager@0.37 jupyterlab_bokeh@0.6 @pyviz/jupyterlab_pyviz
+RUN jupyter labextension install -y --clean @jupyter-widgets/jupyterlab-manager@0.38 jupyterlab_bokeh@0.6 @pyviz/jupyterlab_pyviz@0.6.3
 # Install julia
 ENV JULIA_PATH /opt/julia
 ENV PATH $JULIA_PATH/bin:$PATH
