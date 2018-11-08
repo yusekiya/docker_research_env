@@ -59,7 +59,7 @@ RUN mkdir /etc/julia && \
     # Create JULIA_PKGDIR \
     mkdir $JULIA_PKGDIR
 RUN julia -e 'using Pkg; Pkg.add("IJulia"); Pkg.add("PyCall"); using IJulia' && \
-    pip install julia 
+    pip install julia==0.2.*
 # Configure jupyter
 RUN mkdir -p /project/notebook
 COPY jupyter_notebook_config.py /opt/conda/etc/jupyter/
