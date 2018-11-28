@@ -36,7 +36,6 @@ RUN conda config --add channels conda-canary && \
     sqlite=3.24.* \
     scikit-learn=0.19.* \
 # Install jupyterlab
-    conda-forge::ipympl=0.2.* \
     conda-forge::nodejs=9.9.* \
     conda-forge::ipywidgets=7.4.* \
     conda-forge::jupyterlab=0.35.* && \
