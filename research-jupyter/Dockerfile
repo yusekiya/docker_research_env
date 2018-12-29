@@ -8,12 +8,12 @@ RUN conda config --add channels conda-canary && \
     conda install -yq \
     python=3.7.* \
     blaze=0.11.* \
-    bokeh=0.13.* \
+    bokeh=1.0.* \
     bottleneck=1.2.* \
-    cython=0.28.* \
-    dask=0.18.* \
+    cython=0.29.* \
+    dask=1.0.* \
     dill=0.2.8.* \
-    joblib=0.12.* \
+    joblib=0.13.* \
     pyviz::holoviews=1.10.* \
     numpy=1.15.* \
     numpydoc=0.8.* \
@@ -22,18 +22,18 @@ RUN conda config --add channels conda-canary && \
     pandas=0.23.* \
     matplotlib=3.0.* \
     mkl-service=1.1.* \
-    numba=0.39.* \
+    numba=0.41.* \
     jupyter=1.0.* \
     notebook=5.7.* \
     pathlib2=2.3.* \
-    pytest=3.6.* \
+    pytest=4.0.* \
     pytest-mock=1.10.* \
     python-dateutil=2.7.* \
-    pytz=2018.3 \
-    pyyaml=3.12 \
+    pytz=2018.7 \
+    pyyaml=3.13 \
     sqlalchemy=1.2.* \
     psycopg2=2.7.* \
-    sqlite=3.24.* \
+    sqlite=3.26.* \
     scikit-learn=0.19.* \
 # Install jupyterlab
     conda-forge::nodejs=9.9.* \
@@ -45,11 +45,11 @@ RUN conda config --add channels conda-canary && \
 RUN jupyter labextension install -y --clean @jupyter-widgets/jupyterlab-manager@0.38 jupyterlab_bokeh@0.6.3 @pyviz/jupyterlab_pyviz@0.6.3
 # Install julia
 ENV JULIA_PKGDIR=/opt/julia
-ENV JULIA_VERSION=1.0.2
+ENV JULIA_VERSION=1.0.3
 RUN mkdir /opt/julia-${JULIA_VERSION} && \
     cd /tmp && \
     curl -fL -o julia-${JULIA_VERSION}-linux-x86_64.tar.gz https://julialang-s3.julialang.org/bin/linux/x64/`echo ${JULIA_VERSION} | cut -d. -f 1,2`/julia-${JULIA_VERSION}-linux-x86_64.tar.gz && \
-    echo "e0e93949753cc4ac46d5f27d7ae213488b3fef5f8e766794df0058e1b3d2f142 *julia-${JULIA_VERSION}-linux-x86_64.tar.gz" | sha256sum -c - && \
+    echo "362ba867d2df5d4a64f824e103f19cffc3b61cf9d5a9066c657f1c5b73c87117 *julia-${JULIA_VERSION}-linux-x86_64.tar.gz" | sha256sum -c - && \
     tar xzf julia-${JULIA_VERSION}-linux-x86_64.tar.gz -C /opt/julia-${JULIA_VERSION} --strip-components=1 && \
     rm /tmp/julia-${JULIA_VERSION}-linux-x86_64.tar.gz && \
     ln -fs /opt/julia-*/bin/julia /usr/local/bin/julia
