@@ -45,11 +45,11 @@ RUN conda config --add channels conda-canary && \
 RUN jupyter labextension install -y --clean @jupyter-widgets/jupyterlab-manager@0.38 jupyterlab_bokeh@0.6.3 @pyviz/jupyterlab_pyviz@0.6.3
 # Install julia
 ENV JULIA_PKGDIR=/opt/julia
-ENV JULIA_VERSION=1.0.3
+ENV JULIA_VERSION=1.1.0
 RUN mkdir /opt/julia-${JULIA_VERSION} && \
     cd /tmp && \
     curl -fL -o julia-${JULIA_VERSION}-linux-x86_64.tar.gz https://julialang-s3.julialang.org/bin/linux/x64/`echo ${JULIA_VERSION} | cut -d. -f 1,2`/julia-${JULIA_VERSION}-linux-x86_64.tar.gz && \
-    echo "362ba867d2df5d4a64f824e103f19cffc3b61cf9d5a9066c657f1c5b73c87117 *julia-${JULIA_VERSION}-linux-x86_64.tar.gz" | sha256sum -c - && \
+    echo "80cfd013e526b5145ec3254920afd89bb459f1db7a2a3f21849125af20c05471 *julia-${JULIA_VERSION}-linux-x86_64.tar.gz" | sha256sum -c - && \
     tar xzf julia-${JULIA_VERSION}-linux-x86_64.tar.gz -C /opt/julia-${JULIA_VERSION} --strip-components=1 && \
     rm /tmp/julia-${JULIA_VERSION}-linux-x86_64.tar.gz && \
     ln -fs /opt/julia-*/bin/julia /usr/local/bin/julia
