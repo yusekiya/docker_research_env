@@ -14,7 +14,7 @@ RUN conda config --add channels conda-canary && \
     dask=1.0.* \
     dill=0.2.8.* \
     joblib=0.13.* \
-    pyviz::holoviews=1.10.* \
+    pyviz::holoviews=1.11.* \
     numpy=1.15.* \
     numpydoc=0.8.* \
     numexpr=2.6.* \
