@@ -20,4 +20,6 @@ RUN \
 RUN conda install -yq  pybind11=2.2.* mkl-devel&&\
     conda clean -tipsy
 
+RUN pip install qutip==4.3.*
+
 WORKDIR "/project"
