@@ -8,21 +8,21 @@ RUN conda config --add channels conda-canary && \
     conda install -yq \
     python=3.7.* \
     blaze=0.11.* \
-    bokeh=1.0.* \
+    bokeh=1.1.* \
     bottleneck=1.2.* \
     cython=0.29.* \
-    dask=1.0.* \
-    dill=0.2.8.* \
+    dask=1.2.* \
+    dill=0.2.* \
     joblib=0.13.* \
-    pyviz::holoviews=1.11.* \
-    numpy=1.15.* \
-    numpydoc=0.8.* \
+    pyviz::holoviews=1.12.* \
+    numpy=1.16.* \
+    numpydoc=0.9.* \
     numexpr=2.6.* \
-    scipy=1.1.0 \
-    pandas=0.23.* \
+    scipy=1.2.0 \
+    pandas=0.24.* \
     matplotlib=3.0.* \
     mkl-service=1.1.* \
-    numba=0.41.* \
+    numba=0.43.* \
     jupyter=1.0.* \
     notebook=5.7.* \
     pathlib2=2.3.* \
@@ -31,10 +31,11 @@ RUN conda config --add channels conda-canary && \
     python-dateutil=2.7.* \
     pytz=2018.7 \
     pyyaml=3.13 \
-    sqlalchemy=1.2.* \
+    sqlalchemy=1.3.* \
     psycopg2=2.7.* \
     sqlite=3.26.* \
-    scikit-learn=0.19.* \
+    scikit-learn=0.20.* \
+    conda-forge::qutip=4.3.* \
 # Install jupyterlab
     conda-forge::nodejs=9.9.* \
     conda-forge::ipywidgets=7.4.* \
@@ -42,7 +43,7 @@ RUN conda config --add channels conda-canary && \
 # Cleanup
     conda clean -tipsy
 # Install jupyterlab extentions
-RUN jupyter labextension install -y --clean @jupyter-widgets/jupyterlab-manager@0.38 jupyterlab_bokeh@0.6.3 @pyviz/jupyterlab_pyviz@0.6.3
+RUN jupyter labextension install -y --clean @jupyter-widgets/jupyterlab-manager@0.38 jupyterlab_bokeh@0.6.3 @pyviz/jupyterlab_pyviz@0.7.2
 # Install julia
 ENV JULIA_PKGDIR=/opt/julia
 ENV JULIA_VERSION=1.1.0
