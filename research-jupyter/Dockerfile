@@ -69,7 +69,7 @@ RUN mkdir /etc/julia && \
 
 RUN julia -e 'import Pkg; Pkg.update()' && \
     (test $TEST_ONLY_BUILD || julia -e 'import Pkg; Pkg.add("HDF5")') && \
-    julia -e "using Pkg; pkg\"add Gadfly RDatasets IJulia Plots GR BenchmarkTools InstantiateFromURL\"; pkg\"precompile\"" && \ 
+    julia -e "using Pkg; pkg\"add Arpack Gadfly RDatasets IJulia Plots GR BenchmarkTools InstantiateFromURL\"; pkg\"precompile\"" && \ 
     # install library for python interface
     julia -e "ENV[\"PYTHON\"]=ENV[\"CONDA_DIR\"]*\"/bin/python\"; using Pkg; pkg\"add PyCall PyPlot\"; pkg\"precompile\""
 
