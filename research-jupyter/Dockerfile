@@ -1,7 +1,9 @@
 FROM continuumio/miniconda3:4.5.11
+
 RUN echo deb http://deb.debian.org/debian stretch contrib non-free >> /etc/apt/sources.list &&\
-    apt-get update && apt-get install -y fonts-freefont-ttf fonts-firacode ffmpeg &&\
+    apt-get update && apt-get install -y fonts-freefont-ttf fonts-firacode ffmpeg hdf5-tools &&\
     apt-get clean
+
 RUN conda config --add channels conda-canary && \
     conda update -yq conda && \
     conda config --system --add pinned_packages conda-canary::conda && \
@@ -41,25 +43,36 @@ RUN conda config --add channels conda-canary && \
     conda-forge::jupyterlab=0.35.* && \
 # Cleanup
     conda clean -tipsy
+
 # Install jupyterlab extentions
 RUN jupyter labextension install -y --clean @jupyter-widgets/jupyterlab-manager@0.38 jupyterlab_bokeh@0.6.3 @pyviz/jupyterlab_pyviz@0.7.2
-# Install julia
+
+# install Julia packages in /opt/julia instead of $HOME
+ENV JULIA_DEPOT_PATH=/opt/julia
 ENV JULIA_PKGDIR=/opt/julia
-ENV JULIA_VERSION=1.1.0
+ENV JULIA_VERSION=1.1.1
+ENV CONDA_DIR=/opt/conda
+
 RUN mkdir /opt/julia-${JULIA_VERSION} && \
     cd /tmp && \
-    curl -fL -o julia-${JULIA_VERSION}-linux-x86_64.tar.gz https://julialang-s3.julialang.org/bin/linux/x64/`echo ${JULIA_VERSION} | cut -d. -f 1,2`/julia-${JULIA_VERSION}-linux-x86_64.tar.gz && \
-    echo "80cfd013e526b5145ec3254920afd89bb459f1db7a2a3f21849125af20c05471 *julia-${JULIA_VERSION}-linux-x86_64.tar.gz" | sha256sum -c - && \
+    wget -q https://julialang-s3.julialang.org/bin/linux/x64/`echo ${JULIA_VERSION} | cut -d. -f 1,2`/julia-${JULIA_VERSION}-linux-x86_64.tar.gz && \
+    echo "f0a83a139a89a2ccf2316814e5ee1c0c809fca02cbaf4baf3c1fd8eb71594f06 *julia-${JULIA_VERSION}-linux-x86_64.tar.gz" | sha256sum -c - && \
     tar xzf julia-${JULIA_VERSION}-linux-x86_64.tar.gz -C /opt/julia-${JULIA_VERSION} --strip-components=1 && \
-    rm /tmp/julia-${JULIA_VERSION}-linux-x86_64.tar.gz && \
-    ln -fs /opt/julia-*/bin/julia /usr/local/bin/julia
+    rm /tmp/julia-${JULIA_VERSION}-linux-x86_64.tar.gz
+RUN ln -fs /opt/julia-*/bin/julia /usr/local/bin/julia
+
 # Show Julia where conda libraries are \
 RUN mkdir /etc/julia && \
-    echo "push!(Libdl.DL_LOAD_PATH, \"/opt/conda/lib\")" >> /etc/julia/juliarc.jl && \
+    echo "push!(Libdl.DL_LOAD_PATH, \"$CONDA_DIR/lib\")" >> /etc/julia/juliarc.jl && \
     # Create JULIA_PKGDIR \
     mkdir $JULIA_PKGDIR
-RUN julia -e 'using Pkg; Pkg.add("IJulia"); Pkg.add("PyCall"); using IJulia' && \
-    pip install julia==0.2.*
+
+RUN julia -e 'import Pkg; Pkg.update()' && \
+    (test $TEST_ONLY_BUILD || julia -e 'import Pkg; Pkg.add("HDF5")') && \
+    julia -e "using Pkg; pkg\"add Arpack Gadfly RDatasets IJulia Plots GR BenchmarkTools InstantiateFromURL\"; pkg\"precompile\"" && \ 
+    # install library for python interface
+    julia -e "ENV[\"PYTHON\"]=ENV[\"CONDA_DIR\"]*\"/bin/python\"; using Pkg; pkg\"add PyCall PyPlot\"; pkg\"precompile\""
+
 # Configure jupyter
 RUN mkdir -p /project/notebook
 COPY jupyter_notebook_config.py /opt/conda/etc/jupyter/
